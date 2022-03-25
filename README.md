@@ -44,3 +44,29 @@ Ashmont to Arlington -> Red Line, Green Line B
 Copley to Cedar Grove -> Green Line B, Red Line, Mattapan Trolley
 
 ```
+
+# Algorith to find connection (MBTA lines) between two stops - Question 3
+
+We are dealing with the graph - vertex - stop; edge - line
+
+To find connecting lines we do NOT need actually full graph traverse (can use java guava or other packages)
+
+Use simplified model with edges and child edges only:
+
+ the algo - connect stops stop1 and stop2:
+ 
+  0. fill mini graph with edges - no need to have inner stops, only lines and intersecting lines
+  1. get lines (edges) for of the stop1 - line[] lines1 - usually one line, but could be set (like Downtown Crossing: Orange, Red Line)
+                          and for stop2 - line[] lines2
+  2. (for each line1 in lines1) check if line2 (from lines2) == lin1 OR if line2 belongs line1.child lines
+     collect connection path along the way.
+     
+     if line1!=line2 and line1.children do not contain line2 - recurse: repeat for all line1.children
+```
+  Code map:
+  call rest api           code.helper.Rest - uses simple http get. can switch to RestTemplate with mono/flux if needed
+  init all datasets       Question3() constructor
+  main recursion method   Question3::findRouteConnection
+                          Question3::question_3_connectStops(String station1, String station2) - main test method for question 3
+
+```
