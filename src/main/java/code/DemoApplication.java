@@ -12,7 +12,7 @@ public class DemoApplication {
     private static Logger log = LoggerFactory.getLogger(DemoApplication.class);
 
     public static void main(String[] args) throws Exception {
-        log.info("--- main" );
+        log.info("--- main");
 
         // Question 1 - "subway" routes “long names”
         //Red Line,Mattapan Trolley,Orange Line,Green Line B,Green Line C,Green Line D,Green Line E,Blue Line
@@ -59,8 +59,8 @@ public class DemoApplication {
 //        The Blue Line is unavailable (police incident), can you get from Suffolk Downs to Davis?
 //        The Green Line E is unavailable, can you get from Harvard to Haymarket?
 
-        //q3.question_3_connectStops("Coolidge Corner", "Mattapan", "Red Line");
-        //q3.question_3_connectStops("Suffolk Downs", "Davis", "Blue Line");
+        q3.question_3_connectStops("Coolidge Corner", "Mattapan", "Red Line");
+        q3.question_3_connectStops("Suffolk Downs", "Davis", "Blue Line");
         q3.question_3_connectStops("Harvard", "Haymarket", "Green Line E");
         q3.question_3_connectStops("Harvard", "Haymarket", "Green Line D; Green Line E");
         /**

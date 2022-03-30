@@ -68,11 +68,11 @@ public class Edge {
      * @return
      */
     public List<Edge> getEdges() {
-        return edges.stream().filter(x->!x.isClosed()).collect(Collectors.toList());
+        return edges.stream().filter(x -> !x.isClosed()).collect(Collectors.toList());
     }
 
     public List<String> getEdgeNames() {
-        return edges.stream().filter(x->!x.isClosed()).map(x -> x.getName() ).collect(Collectors.toList());
+        return edges.stream().filter(x -> !x.isClosed()).map(x -> x.getName()).collect(Collectors.toList());
     }
 
     //endregion

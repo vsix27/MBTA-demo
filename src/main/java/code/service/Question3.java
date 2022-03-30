@@ -6,14 +6,12 @@ import org.apache.commons.lang3.tuple.Pair;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.sql.Array;
 import java.util.*;
 import java.util.stream.Collectors;
 
 public class Question3 {
     private static final Logger log = LoggerFactory.getLogger(Question3.class);
 
-    private RestCaller rc = new RestCaller();
     private Question2 question2;
     private HashMap<String, String> allStops;
 
