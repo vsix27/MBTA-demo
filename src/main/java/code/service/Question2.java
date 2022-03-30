@@ -28,7 +28,7 @@ public class Question2 {
      */
 
     private HashMap<String, Integer> mapRouteStopsCounts;
-    private Map<String, String> mapRoutes;
+    private HashMap<String, String> mapRoutes;
     private HashMap<String, String> mapRouteStopsAll;
     private HashMap<String, String> mapRouteIntersectionsOnly;
     private HashMap<String, List<String>> mapStopsInRoutes;

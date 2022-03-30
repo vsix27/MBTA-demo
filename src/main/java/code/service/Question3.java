@@ -6,6 +6,7 @@ import org.apache.commons.lang3.tuple.Pair;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.sql.Array;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -22,7 +23,8 @@ public class Question3 {
             question2.question_2_additionalInfo(false);
             allStops = question2.getRouteStopsAll();
             //debugAllStops(allStops);
-            edges = question2.getEdges();
+            //edges = question2.getEdges();
+            edgesOriginal = question2.getEdges();
         } catch (Exception ex) {
             log.error(ex.getMessage());
         }
@@ -106,28 +108,61 @@ public class Question3 {
     }
 
     private List<Edge> edges;
+    private List<Edge> edgesOriginal;
 
-    public void question_3_connectStops(String station1, String station2) {
+    /**
+     * closedRoute - "; " separated list of routes
+     * @param station1
+     * @param station2
+     * @param closedRoute
+     */
+    public void question_3_connectStops(String station1, String station2, String closedRoute) {
+        List<String> closedRoutes = List.of(closedRoute.split("; "));
+        question_3_connectStops(station1, station2, closedRoutes);
+    }
 
+    public void question_3_connectStops(String station1, String station2, List<String> closedRoutes) {
+        edges = new ArrayList<>(edgesOriginal);
 
-        String[] edgeNames1 = null;
-        String[] edgeNames2 = null;
+        for (var e : edges) {
+            if (closedRoutes.contains(e.getName()))
+                e.setClosed(true);
+
+            for (var ech : e.getEdges())
+                if (closedRoutes.contains(ech.getName()))
+                    ech.setClosed(true);
+        }
+
+        List<String> edgeNames1 = new ArrayList<>();
+        List<String> edgeNames2 = new ArrayList<>();
 
         try {
-            edgeNames1 = allStops.get(station1).split("; ");
-            edgeNames2 = allStops.get(station2).split("; ");
+            edgeNames1 = List.of(allStops.get(station1).split("; ")).stream()
+                    .filter(x -> !closedRoutes.contains(x)).collect(Collectors.toList());
+            edgeNames2 = List.of(allStops.get(station2).split("; ")).stream()
+                    .filter(x -> !closedRoutes.contains(x)).collect(Collectors.toList());
         } catch (Exception ex) {
-            if (edgeNames1 == null)
-                System.out.println("invalid START stop name provided (not found...): " + station1);
-            if (edgeNames2 == null)
-                System.out.println("invalid END stop name provided (not found...): " + station2);
+            log.error(ex.getMessage());
+        }
+
+        final String fromTo = "from " + station1 + " to " + station2 + ": invalid";
+        final String closedRts = "; closed routes: " + closedRoutes;
+        final String routeClosed = "stop name provided (not found...) or route is closed: ";
+        if (edgeNames1.size() == 0) {
+            System.out.println(fromTo + " START " + routeClosed + station1 + closedRts);
+            return;
+        }
+        if (edgeNames2.size() == 0) {
+            System.out.println(fromTo + " END " + routeClosed + station2 + closedRts);
             return;
         }
 
         // routes for stop1 - list of edge names
-        var routesForStop1 = Arrays.stream(edgeNames1).collect(Collectors.toCollection(HashSet::new));
+        var routesForStop1 = edgeNames1.stream().distinct().filter(x -> !closedRoutes.contains(x))
+                .collect(Collectors.toCollection(HashSet::new));
         // routes for stop2 - list of edge names
-        var routesForStop2 = Arrays.stream(edgeNames2).collect(Collectors.toCollection(HashSet::new));
+        var routesForStop2 = edgeNames2.stream().filter(x -> !closedRoutes.contains(x))
+                .collect(Collectors.toCollection(HashSet::new));
 
         String edgePathCombined = "";
         boolean edgePathFound = false;

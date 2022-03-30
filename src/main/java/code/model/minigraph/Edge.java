@@ -8,6 +8,15 @@ public class Edge {
     private String name;
     //edges which intersect with the current edge
     private List<Edge> edges;
+    private boolean closed;
+
+    public boolean isClosed() {
+        return closed;
+    }
+
+    public void setClosed(boolean closed) {
+        this.closed = closed;
+    }
 
     public Edge(String name) {
         this.name = name;
@@ -45,7 +54,7 @@ public class Edge {
      * @return
      */
     public boolean containsEdge(String name) {
-        return getEdges().stream().anyMatch(x -> x.name.equals(name));
+        return getEdges().stream().anyMatch(x -> x.name.equals(name) && !x.isClosed());
     }
 
     //region get/set
@@ -59,11 +68,11 @@ public class Edge {
      * @return
      */
     public List<Edge> getEdges() {
-        return edges;
+        return edges.stream().filter(x->!x.isClosed()).collect(Collectors.toList());
     }
 
     public List<String> getEdgeNames() {
-        return edges.stream().map(x -> x.getName()).collect(Collectors.toList());
+        return edges.stream().filter(x->!x.isClosed()).map(x -> x.getName() ).collect(Collectors.toList());
     }
 
     //endregion

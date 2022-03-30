@@ -47,13 +47,40 @@ public class DemoApplication {
          */
         System.out.println("\n=== Question 3 - connect two stations");
         Question3 q3 = new Question3();
-        q3.question_3_connectStops("Harvard", "Quincy Center"); // Red Line - same route
-        q3.question_3_connectStops("Harvard", "Ruggles");       // Red Line, Orange Line
-        q3.question_3_connectStops("Central", "Airport");       // Red Line, Green Line C, Blue Line  ... others available - see commented extended
-        q3.question_3_connectStops("xxxx", "invalid stop name"); // negative case
-        q3.question_3_connectStops("Davis", "Kendall/MIT");  // 1. Davis to Kendall/MIT -> Red Line
-        q3.question_3_connectStops("Ashmont", "Arlington");  // 2. Ashmont to Arlington -> Red Line, Green Line B
-        q3.question_3_connectStops("Copley", "Cedar Grove"); // Green Line B, Red Line, Mattapan Trolley
+//        q3.question_3_connectStops("Harvard", "Quincy Center", ""); // Red Line - same route
+//        q3.question_3_connectStops("Harvard", "Ruggles", "");       // Red Line, Orange Line
+//        q3.question_3_connectStops("Central", "Airport", "");       // Red Line, Green Line C, Blue Line  ... others available - see commented extended
+//        q3.question_3_connectStops("xxxx", "invalid stop name", ""); // negative case
+//        q3.question_3_connectStops("Davis", "Kendall/MIT", "");  // 1. Davis to Kendall/MIT -> Red Line
+//        q3.question_3_connectStops("Ashmont", "Arlington", "");  // 2. Ashmont to Arlington -> Red Line, Green Line B
+//        q3.question_3_connectStops("Copley", "Cedar Grove", ""); // Green Line B, Red Line, Mattapan Trolley
+
+//        The Red Line is unavailable (track fire!), can you get from Coolidge Corner to Mattapan?
+//        The Blue Line is unavailable (police incident), can you get from Suffolk Downs to Davis?
+//        The Green Line E is unavailable, can you get from Harvard to Haymarket?
+
+        //q3.question_3_connectStops("Coolidge Corner", "Mattapan", "Red Line");
+        //q3.question_3_connectStops("Suffolk Downs", "Davis", "Blue Line");
+        q3.question_3_connectStops("Harvard", "Haymarket", "Green Line E");
+        q3.question_3_connectStops("Harvard", "Haymarket", "Green Line D; Green Line E");
+        /**
+         * from Coolidge Corner to Mattapan: invalid START stop name provided (not found...) or route is closed: Coolidge Corner; closed routes: [Red Line]
+         * from Suffolk Downs to Davis: invalid END stop name provided (not found...) or route is closed: Davis; closed routes: [Blue Line]
+         * from Harvard to Haymarket: invalid START stop name provided (not found...) or route is closed: Harvard; closed routes: [Green Line E]
+         *
+         * Question 4
+         * Add support for an unavailable train route. In cases where a train route is down, the program should list the
+         * alternate routes or return a message stating that no route exists between these two stops.
+         *
+         * We will provide information about which train route is down, no change is needed to the MBTA API integration.
+         *
+         * Examples:
+         *
+         The Red Line is unavailable (track fire!), can you get from Coolidge Corner to Mattapan?
+         The Blue Line is unavailable (police incident), can you get from Suffolk Downs to Davis?
+         The Green Line E is unavailable, can you get from Harvard to Haymarket?
+         */
+
     }
 
 }
