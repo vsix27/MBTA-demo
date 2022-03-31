@@ -17,11 +17,11 @@ public class DemoApplication {
         // Question 1 - "subway" routes “long names”
         //Red Line,Mattapan Trolley,Orange Line,Green Line B,Green Line C,Green Line D,Green Line E,Blue Line
         System.out.println("\n=== Question 1 - 'subway' routes 'long names'");
-        new Question1().question_1_serverFilter();
+        //new Question1().question_1_serverFilter();
 
         // Question 2
         System.out.println("\n=== Question 2 - min/max stops in routes, intersections");
-        new Question2().question_2_additionalInfo();
+        //new Question2().question_2_additionalInfo();
 
         // MBTA map https://cdn.mbta.com/sites/default/files/2022-03/3-21-2022-subway-map-union-square-branch.pdf
         // Question 3
@@ -59,10 +59,18 @@ public class DemoApplication {
 //        The Blue Line is unavailable (police incident), can you get from Suffolk Downs to Davis?
 //        The Green Line E is unavailable, can you get from Harvard to Haymarket?
 
-        q3.question_3_connectStops("Coolidge Corner", "Mattapan", "Red Line");
-        q3.question_3_connectStops("Suffolk Downs", "Davis", "Blue Line");
+        //q3.question_3_connectStops("Coolidge Corner", "Mattapan", "Red Line");
+        //Coolidge Corner to Mattapan -> no connection
+
+        //q3.question_3_connectStops("Suffolk Downs", "Davis", "Blue Line");
+        //from Suffolk Downs to Davis: invalid START stop name provided (not found...) or route is closed: Suffolk Downs; closed routes: [Blue Line]
+
         q3.question_3_connectStops("Harvard", "Haymarket", "Green Line E");
+        //Harvard to Haymarket -> Red Line, Green Line D
+
         q3.question_3_connectStops("Harvard", "Haymarket", "Green Line D; Green Line E");
+        //Harvard to Haymarket -> Red Line, Orange Line
+
         /**
          * from Coolidge Corner to Mattapan: invalid START stop name provided (not found...) or route is closed: Coolidge Corner; closed routes: [Red Line]
          * from Suffolk Downs to Davis: invalid END stop name provided (not found...) or route is closed: Davis; closed routes: [Blue Line]

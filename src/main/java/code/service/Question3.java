@@ -14,14 +14,16 @@ public class Question3 {
 
     private Question2 question2;
     private HashMap<String, String> allStops;
+    private HashMap<String, String> allStopsOriginal;
+    private List<Edge> edges;
+    private List<Edge> edgesOriginal;
 
     public Question3() {
         question2 = new Question2();
         try {
             question2.question_2_additionalInfo(false);
-            allStops = question2.getRouteStopsAll();
+            allStopsOriginal = question2.getRouteStopsAll();
             //debugAllStops(allStops);
-            //edges = question2.getEdges();
             edgesOriginal = question2.getEdges();
         } catch (Exception ex) {
             log.error(ex.getMessage());
@@ -70,7 +72,24 @@ public class Question3 {
             System.out.println(String.format("%s. %-27s: \n\t %s", k++, item, String.join(";", items.get(item))));
     }
 
+    private Map<String, String> processedEdges = new HashMap<>();
+    private int processedCount = 0;
+
     public Pair<Boolean, String> findRouteConnection(Edge edge1, Edge edge2, String path) {
+        if (processedEdges.containsKey(edge1.getName()) && processedEdges.get(edge1.getName()).equals(edge2.getName())) {
+            //System.out.println(String.format("%s. already processed: '%s',  '%s' ", processedCount++, edge1.getName(), edge2.getName()));
+            return new ImmutablePair<>(false, path);
+        }
+
+        if (processedEdges.containsKey(edge2.getName()) && processedEdges.get(edge2.getName()).equals(edge1.getName())) {
+            //System.out.println(String.format("%s. already processed: '%s',  '%s' ", processedCount++, edge2.getName(), edge1.getName()));
+            return new ImmutablePair<>(false, path);
+        }
+        processedEdges.put(edge1.getName(), edge2.getName());
+
+        if (edge1.isClosed() || edge2.isClosed())
+            return new ImmutablePair<>(false, path);
+
         if (edge1.getName().equals(edge2.getName())) {
             path += String.format(", %s", edge1.getName());
             return new ImmutablePair<>(true, path);
@@ -105,11 +124,9 @@ public class Question3 {
         return new ImmutablePair<>(false, path);
     }
 
-    private List<Edge> edges;
-    private List<Edge> edgesOriginal;
-
     /**
      * closedRoute - "; " separated list of routes
+     *
      * @param station1
      * @param station2
      * @param closedRoute
@@ -120,6 +137,12 @@ public class Question3 {
     }
 
     public void question_3_connectStops(String station1, String station2, List<String> closedRoutes) {
+        processedEdges = new HashMap<>();
+        processedCount = 0;
+
+        //clone collections
+        allStops = new HashMap<>();
+        allStops.putAll(allStopsOriginal);
         edges = new ArrayList<>(edgesOriginal);
 
         for (var e : edges) {
